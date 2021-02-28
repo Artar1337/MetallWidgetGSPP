@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Metall Widget GSPP</string>
+    <string name="goldannotation">Золото</string>
+    <string name="silvannotation">Серебро</string>
+    <string name="platannotation">Платина</string>
+    <string name="pallannotation">Палладий</string>
+    <string name="header">Учетные цены на аффинированные драгоценные металлы по данным ЦБ</string>
+    <string name="value"> руб./грамм</string>
 </resources>
