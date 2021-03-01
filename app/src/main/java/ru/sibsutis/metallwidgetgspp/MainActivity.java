@@ -7,6 +7,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private void addLine(TableLayout tableLayout,String prefix, String postfix)
@@ -27,9 +34,24 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.addView(row);
     }
 
+    private void valuesUpdate(String value []){
+        String url = "https://www.cbr.ru/hd_base/metall/metall_base_new/";
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            value[0]=title.substring(0,50);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     private void tableUpdate()
     {
-        float  price [] = {1.0f,2.0f,3.0f,4.0f};
+        String  price [] = {"1","2","3","4"};
+        valuesUpdate(price);
 
         TableLayout table = findViewById(R.id.MainTable);
         table.setShrinkAllColumns(true);
