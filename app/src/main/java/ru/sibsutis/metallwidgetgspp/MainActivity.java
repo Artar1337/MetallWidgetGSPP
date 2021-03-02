@@ -2,6 +2,7 @@ package ru.sibsutis.metallwidgetgspp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.appwidget.AppWidgetProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
+    // дата и 4 цены
+    String values [] = new String[5];
 
     private class ParseTask extends AsyncTask<Void, Void, String []> {
 
@@ -34,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
                         .select("tr").get(1).select("td");
 
                 for(int i=0;i<5;i++)
-                result[i]=title.get(i).text();
+                {
+                    result[i]=title.get(i).text();
+                    values[i]=result[i];
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
                 for(int i=0;i<5;i++)
-                    result[i]="ERROR";
+                    result[i]="?";
             }
             return result;
         }
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         {
             TableLayout table = findViewById(R.id.MainTable);
             TextView header = findViewById(R.id.Header);
+            table.removeAllViewsInLayout();
             table.setShrinkAllColumns(true);
             table.setStretchAllColumns(true);
 
