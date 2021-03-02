@@ -2,7 +2,6 @@ package ru.sibsutis.metallwidgetgspp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.appwidget.AppWidgetProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;

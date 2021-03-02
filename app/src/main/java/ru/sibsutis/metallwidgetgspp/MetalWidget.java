@@ -5,41 +5,55 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 public class MetalWidget extends AppWidgetProvider {
+
+    public static String ACTION_WIDGET_RECEIVER = "ActionReceiverWidget";
+
     @Override
-    public void onUpdate(Context context, AppWidgetManager
-            appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         //Создаем новый RemoteViews
-        RemoteViews remoteViews = new
-                RemoteViews(context.getPackageName(), R.layout.widget);
-        //Подготавливаем Intent для Broadcast
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+
+        //этот Intent поменяет металл
         Intent active = new Intent(context, MetalWidget.class);
-        active.setAction("Ivan"); // устанавливаем действие
-        active.putExtra("msg", "Hello"); // добавляем параметр
+        active.setAction(ACTION_WIDGET_RECEIVER);
+        active.putExtra("msg", "Metal changed");
+
+        //этот Intent откроет MainActivity
+        Intent MainActive = new Intent(context, MainActivity.class);
+        MainActive.setAction(ACTION_WIDGET_RECEIVER);
+
         //создаем наше событие
-        PendingIntent actionPendingIntent =
-                PendingIntent.getBroadcast(context, 0, active, 0);
+        PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
+        PendingIntent MainIntent = PendingIntent.getActivity(context, 1, MainActive, 0);
         //регистрируем наше событие
-        remoteViews.setOnClickPendingIntent(R.id.Header,
-                actionPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.MetalChangeButton, actionPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.MetalImage,MainIntent);
+
         //обновляем виджет
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String m;
-        final String action = intent.getAction();
 
-        if (action=="Ivan") { // если поймали наше событие
-            m = intent.getStringExtra("msg");
-// Выводим сообщение его в виде всплавающей подсказки
-            Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
+        //Ловим наш Broadcast, проверяем и выводим сообщение
+        final String action = intent.getAction();
+        if (ACTION_WIDGET_RECEIVER.equals(action)) {
+            String msg = "null";
+            try {
+                msg = intent.getStringExtra("msg");
+            } catch (NullPointerException e) {
+                Log.e("Error", "msg = null");
+            }
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
-        super.onReceive(context, intent); // вызываем родительский метод
+        super.onReceive(context, intent);
     }
+
 }
 

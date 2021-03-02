@@ -6,4 +6,5 @@
     <string name="pallannotation">Палладий</string>
     <string name="header">Учетные цены на аффинированные драгоценные металлы по данным ЦБ на</string>
     <string name="value">руб./грамм</string>
+    <string name="next">Изменить металл</string>
 </resources>

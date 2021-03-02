@@ -16,10 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MetalWidget">
+        <receiver
+            android:name=".MetalWidget"
+            android:label="@string/app_name">
             <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="ru.example.android.widget.ACTION_WIDGET_RECEIVER" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/info" />

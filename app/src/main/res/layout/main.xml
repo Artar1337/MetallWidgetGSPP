@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_gravity="center">
+
+    <TextView android:id="@+id/MetalTextView"
+        android:text="@string/goldannotation"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal|center"
+        android:textColor="@android:color/black"/>
+
+    <TextView android:id="@+id/ValueTextView"
+        android:text="\?"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal|center"
+        android:textColor="@android:color/black"/>
+
+    <Button android:id="@+id/MetalChangeButton"
+        android:text="@string/next"
+        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal|center"/>
+
+    <ImageView
+        android:id="@+id/MetalImage"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal|center"
+        android:src="@drawable/gold"/>
+
+</LinearLayout>
