@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         return task.doInBackground();
     }
 
-    private void tableUpdate()
+    public void tableUpdate()
     {
         //выполняем запрос в фоне
         new ParseTask().execute();
@@ -105,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageView bUpdate = (ImageView) findViewById(R.id.UpdateButton);
+        View.OnClickListener operationListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableUpdate();
+            }
+        };
+        bUpdate.setOnClickListener(operationListener);
         tableUpdate();
     }
 }
