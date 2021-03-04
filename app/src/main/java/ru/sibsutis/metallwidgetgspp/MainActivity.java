@@ -21,7 +21,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     // дата и 4 цены
-    String values [] = new String[5];
+    public String values [] = new String[5];
 
     private class ParseTask extends AsyncTask<Void, Void, String []> {
 
