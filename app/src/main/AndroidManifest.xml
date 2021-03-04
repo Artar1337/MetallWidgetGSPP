@@ -27,7 +27,6 @@
                 <action android:name="ru.sibsutis.metallwidgetgspp.value3"/>
                 <action android:name="ru.sibsutis.metallwidgetgspp.value4"/>
                 <action android:name="ru.sibsutis.metallwidgetgspp.apprec"/>
-
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/info" />
