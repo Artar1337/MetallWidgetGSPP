@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -21,7 +23,9 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     // дата и 4 цены
-    public String values [] = new String[5];
+    String values [] = new String[5];
+    Animation animationRotateCenter;
+    ImageView bUpdate;
 
     private class ParseTask extends AsyncTask<Void, Void, String []> {
 
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             addLine(table,getString(R.string.silvannotation),price[2]+" "+value);
             addLine(table,getString(R.string.platannotation),price[3]+" "+value);
             addLine(table,getString(R.string.pallannotation),price[4]+" "+value);
+            bUpdate.animate().cancel();
         }
     }
 
@@ -101,14 +106,17 @@ public class MainActivity extends AppCompatActivity {
     public void tableUpdate()
     {
         //выполняем запрос в фоне
-        new ParseTask().execute();
+        new MainActivity.ParseTask().execute();
+        bUpdate.startAnimation(animationRotateCenter);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView bUpdate = (ImageView) findViewById(R.id.UpdateButton);
+        animationRotateCenter = AnimationUtils.loadAnimation(
+                this, R.anim.rotate);
+        bUpdate = (ImageView) findViewById(R.id.UpdateButton);
         View.OnClickListener operationListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

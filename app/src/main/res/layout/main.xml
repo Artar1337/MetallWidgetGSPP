@@ -21,42 +21,43 @@
         android:layout_gravity="center_horizontal|center"
         android:textColor="@android:color/black"/>
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:layout_gravity="center">
 
-        <RadioButton
+
+        <Button
             android:id="@+id/radio_1"
-            android:layout_width="match_parent"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_weight="1"
-            android:checked="true" />
+            android:text="Au"
+            />
 
-        <RadioButton
+        <Button
             android:id="@+id/radio_2"
-            android:layout_width="match_parent"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_weight="1" />
+            android:text="Ag"
+            />
 
-        <RadioButton
+        <Button
             android:id="@+id/radio_3"
-            android:layout_width="match_parent"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_weight="1" />
+            android:text="Pt"
+        />
 
-        <RadioButton
+        <Button
             android:id="@+id/radio_4"
-            android:layout_width="match_parent"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_weight="1"
+            android:text="Pd"
              />
-    </RadioGroup>
+        </LinearLayout>
+
 
     <ImageView
         android:id="@+id/MetalImage"
