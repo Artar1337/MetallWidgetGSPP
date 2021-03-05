@@ -8,24 +8,25 @@
         android:id="@+id/Header"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:textColor="@color/black"
+        android:gravity="center_horizontal"
         android:text="@string/header"
-        android:gravity="center_horizontal"/>
+        android:textColor="@color/black" />
+
     <ImageView
         android:id="@+id/UpdateButton"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:gravity="center"
         android:background="@color/white"
-        android:src="@drawable/update"/>
+        android:gravity="center"
+        android:src="@drawable/update" />
+
     <TableLayout
+        android:id="@+id/MainTable"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/MainTable"
         android:layout_gravity="center"
         android:textColor="@color/black"
-        android:textSize="20sp"/>
-
+        android:textSize="20sp" />
 
 
 </LinearLayout>

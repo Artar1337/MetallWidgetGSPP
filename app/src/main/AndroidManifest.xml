@@ -21,28 +21,29 @@
             android:name=".MetalConfig"
             android:label="Choose your fighter">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
         <receiver
-            android:icon="@drawable/gold"
             android:name=".MetalWidget"
+            android:icon="@drawable/gold"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="ru.sibsutis.metallwidgetgspp.value1"/>
-                <action android:name="ru.sibsutis.metallwidgetgspp.value2"/>
-                <action android:name="ru.sibsutis.metallwidgetgspp.value3"/>
-                <action android:name="ru.sibsutis.metallwidgetgspp.value4"/>
-                <action android:name="ru.sibsutis.metallwidgetgspp.apprec"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="ru.sibsutis.metallwidgetgspp.value1" />
+                <action android:name="ru.sibsutis.metallwidgetgspp.value2" />
+                <action android:name="ru.sibsutis.metallwidgetgspp.value3" />
+                <action android:name="ru.sibsutis.metallwidgetgspp.value4" />
+                <action android:name="ru.sibsutis.metallwidgetgspp.apprec" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/info" />
         </receiver>
 
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -14,8 +14,6 @@ public class MetalConfig extends Activity {
     int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
     Intent resultValue;
 
-    final String LOG_TAG = "myLogs";
-
     public final static String WIDGET_PREF = "widget_pref";
     public final static String WIDGET_INDEX = "widget_index_";
 
@@ -51,19 +49,19 @@ public class MetalConfig extends Activity {
         int index;
         switch (selected) {
             case R.id.radio_1:
-                index=1;
+                index = 1;
                 break;
             case R.id.radio_2:
-                index=2;
+                index = 2;
                 break;
             case R.id.radio_3:
-                index=3;
+                index = 3;
                 break;
             case R.id.radio_4:
-                index=4;
+                index = 4;
                 break;
             default:
-                index=1;
+                index = 1;
                 break;
         }
 

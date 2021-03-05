@@ -26,16 +26,16 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     // дата и 4 цены
-    String values [] = new String[5];
+    String values[] = new String[5];
     Animation animationRotateCenter;
     ImageView bUpdate;
 
-    private class ParseTask extends AsyncTask<Void, Void, String []> {
+    private class ParseTask extends AsyncTask<Void, Void, String[]> {
 
         @Override
-        protected String [] doInBackground(Void... params) {
+        protected String[] doInBackground(Void... params) {
             // дата и 4 цены
-            String result [] = {" "," "," "," "," "};
+            String result[] = {" ", " ", " ", " ", " "};
             String url = "https://www.cbr.ru/hd_base/metall/metall_base_new/";
             Document doc = null;
             try {
@@ -45,22 +45,21 @@ public class MainActivity extends AppCompatActivity {
                         select("table.data").first()
                         .select("tr").get(1).select("td");
 
-                for(int i=0;i<5;i++)
-                {
-                    result[i]=title.get(i).text();
-                    values[i]=result[i];
+                for (int i = 0; i < 5; i++) {
+                    result[i] = title.get(i).text();
+                    values[i] = result[i];
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
-                for(int i=0;i<5;i++)
-                    result[i]="?";
+                for (int i = 0; i < 5; i++)
+                    result[i] = "?";
             }
             return result;
         }
+
         @Override
-        protected void onPostExecute(String price [])
-        {
+        protected void onPostExecute(String price[]) {
             TableLayout table = findViewById(R.id.MainTable);
             TextView header = findViewById(R.id.Header);
             table.removeAllViewsInLayout();
@@ -71,16 +70,15 @@ public class MainActivity extends AppCompatActivity {
             String head = getString(R.string.header) + " " + price[0];
 
             header.setText(head);
-            addLine(table,getString(R.string.goldannotation),price[1]+" "+value);
-            addLine(table,getString(R.string.silvannotation),price[2]+" "+value);
-            addLine(table,getString(R.string.platannotation),price[3]+" "+value);
-            addLine(table,getString(R.string.pallannotation),price[4]+" "+value);
+            addLine(table, getString(R.string.goldannotation), price[1] + " " + value);
+            addLine(table, getString(R.string.silvannotation), price[2] + " " + value);
+            addLine(table, getString(R.string.platannotation), price[3] + " " + value);
+            addLine(table, getString(R.string.pallannotation), price[4] + " " + value);
             bUpdate.animate().cancel();
         }
     }
 
-    private void addLine(TableLayout tableLayout,String prefix, String postfix)
-    {
+    private void addLine(TableLayout tableLayout, String prefix, String postfix) {
         //создаем строку
         // добавляем название металла
         TableRow row = new TableRow(this);
@@ -101,13 +99,12 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.addView(row);
     }
 
-    private String [] valuesUpdate(){
+    private String[] valuesUpdate() {
         ParseTask task = new ParseTask();
         return task.doInBackground();
     }
 
-    public void tableUpdate()
-    {
+    public void tableUpdate() {
         //выполняем запрос в фоне
         new MainActivity.ParseTask().execute();
         bUpdate.startAnimation(animationRotateCenter);
