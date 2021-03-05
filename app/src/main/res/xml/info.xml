@@ -5,5 +5,5 @@
     android:previewImage="@drawable/gold"
     android:initialLayout="@layout/main"
     android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen">
+    android:configure="ru.sibsutis.metallwidgetgspp.MetalConfig">
 </appwidget-provider>

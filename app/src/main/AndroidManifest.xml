@@ -17,7 +17,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MetalConfig"
+            android:label="Choose your fighter">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
         <receiver
+            android:icon="@drawable/gold"
             android:name=".MetalWidget"
             android:label="@string/app_name">
             <intent-filter>

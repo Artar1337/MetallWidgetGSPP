@@ -31,6 +31,8 @@ public class MetalWidget extends AppWidgetProvider {
     final public static String VALUE_RECEIVER_3 = "ru.sibsutis.metallwidgetgspp.value3";
     final public static String VALUE_RECEIVER_4 = "ru.sibsutis.metallwidgetgspp.value4";
 
+    final public static String VALUE_OF_INDEX = "ru.sibsutis.metallwidgetgspp.indexvalue";
+
     public static String values [] = {"?","?","?","?","?"};
 
     private class ParseTask extends AsyncTask<Void, Void, String []> {
@@ -57,7 +59,7 @@ public class MetalWidget extends AppWidgetProvider {
             } catch (IOException e) {
                 e.printStackTrace();
                 for(int i=0;i<5;i++)
-                    result[i]="?";
+                    result[i]="0";
             }
             return result;
         }
@@ -71,102 +73,109 @@ public class MetalWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context)
     {
-        new MetalWidget.ParseTask().execute();
-        Intent active_1 = new Intent(context, MetalWidget.class);
-        active_1.setAction(VALUE_RECEIVER_1);
-        onReceive(context,active_1);
+        super.onEnabled(context);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        // Удаляем Preferences
+        SharedPreferences.Editor editor = context.getSharedPreferences(
+                MetalConfig.WIDGET_PREF, Context.MODE_PRIVATE).edit();
+        for (int widgetID : appWidgetIds) {
+            editor.remove(MetalConfig.WIDGET_INDEX + widgetID);
+        }
+        editor.commit();
+    }
+
+    static void updateWidget(Context context, AppWidgetManager appWidgetManager,
+                             SharedPreferences sp, int widgetID)
+    {
+
+            int widgetIndex = sp.getInt(MetalConfig.WIDGET_INDEX + widgetID, 0);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+
+            Intent active;
+            if(widgetIndex==1)
+            {
+                active = new Intent(context, MetalWidget.class);
+                active.setAction(VALUE_RECEIVER_1);
+            }
+            else if(widgetIndex==2){
+                active = new Intent(context, MetalWidget.class);
+                active.setAction(VALUE_RECEIVER_2);
+            }
+            else if(widgetIndex==3){
+                active = new Intent(context, MetalWidget.class);
+                active.setAction(VALUE_RECEIVER_3);
+            }
+            else if(widgetIndex==4){
+                active = new Intent(context, MetalWidget.class);
+                active.setAction(VALUE_RECEIVER_4);
+            }
+            else
+            {
+                active = new Intent(context, MainActivity.class);
+                active.setAction(APP_RECEIVER);
+            }
+
+            active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
+            active.putExtra(VALUE_OF_INDEX, widgetIndex);
+
+            //этот Intent отправил в приложение
+            Intent main_active = new Intent(context, MainActivity.class);
+            main_active.setAction(APP_RECEIVER);
+
+            //создаем событие
+            PendingIntent intent = PendingIntent.
+                    getBroadcast(context, 1, active, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent main_intent = PendingIntent.
+                    getActivity(context, 0, main_active, PendingIntent.FLAG_UPDATE_CURRENT);
+            //регистрируем событие
+            remoteViews.setOnClickPendingIntent(R.id.buttonUpdate, intent);
+            remoteViews.setOnClickPendingIntent(R.id.MetalImage, main_intent);
+
+            //обновляем виджет
+            appWidgetManager.updateAppWidget(widgetID, remoteViews);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
         new MetalWidget.ParseTask().execute();
-        final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
-            int appWidgetId = appWidgetIds[i];
 
-            //эти Intent поменяет металл
-            Intent active_1 = new Intent(context, MetalWidget.class);
-            active_1.setAction(VALUE_RECEIVER_1);
-            active_1.putExtra("MyWidgetID", String.valueOf(appWidgetId));
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-            Intent active_2 = new Intent(context, MetalWidget.class);
-            active_2.setAction(VALUE_RECEIVER_2);
-            active_1.putExtra("MyWidgetID", String.valueOf(appWidgetId));
-
-            Intent active_3 = new Intent(context, MetalWidget.class);
-            active_3.setAction(VALUE_RECEIVER_3);
-            active_1.putExtra("MyWidgetID", String.valueOf(appWidgetId));
-
-            Intent active_4 = new Intent(context, MetalWidget.class);
-            active_4.setAction(VALUE_RECEIVER_4);
-            active_1.putExtra("MyWidgetID", String.valueOf(appWidgetId));
-
-            //этот Intent отправил в приложение
-            Intent main_active = new Intent(context, MainActivity.class);
-            main_active.setAction(APP_RECEIVER);
-
-            //создаем наше событие
-            PendingIntent intent_1 = PendingIntent.
-                    getBroadcast(context, 1, active_1, PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent intent_2 = PendingIntent.
-                    getBroadcast(context, 2, active_2, PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent intent_3 = PendingIntent.
-                    getBroadcast(context, 3, active_3, PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent intent_4 = PendingIntent.
-                    getBroadcast(context, 4, active_4, PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent main_intent = PendingIntent.
-                    getActivity(context, 0, main_active, PendingIntent.FLAG_UPDATE_CURRENT);
-            //регистрируем наше событие
-            remoteViews.setOnClickPendingIntent(R.id.radio_1, intent_1);
-            remoteViews.setOnClickPendingIntent(R.id.radio_2, intent_2);
-            remoteViews.setOnClickPendingIntent(R.id.radio_3, intent_3);
-            remoteViews.setOnClickPendingIntent(R.id.radio_4, intent_4);
-            remoteViews.setOnClickPendingIntent(R.id.MetalImage, main_intent);
-
-            //обновляем виджет
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        SharedPreferences sp = context.getSharedPreferences(
+                MetalConfig.WIDGET_PREF, Context.MODE_PRIVATE);
+        for (int id : appWidgetIds) {
+            updateWidget(context, appWidgetManager, sp, id);
         }
+
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         final String action = intent.getAction();
+        int ID=-1;
+        if(intent.getExtras()!=null)
+        {
+            ID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
+        }
 
         if (action.equals(VALUE_RECEIVER_1)) {
-
-            Toast.makeText(context, intent.getStringExtra("MyWidgetID")
-                    , Toast.LENGTH_SHORT).show();
-            int widgetID=Integer.parseInt(intent.getStringExtra("MyWidgetID"));
-
-            Log.wtf("OK","FINE");
-
             new MetalWidget.ParseTask().execute();
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            ComponentName componentName = new ComponentName(context, MetalWidget.class);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
-            final int N = appWidgetIds.length;
-            int i;
-            //проходим и ищем индекс виджета
-            for(i=0;i<N;i++)
-            {
-                if(widgetID==appWidgetIds[i])
-                    break;
-            }
-            if(i==N)
-                return;
-
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
             remoteViews.setTextViewText(R.id.MetalTextView, context.getString(R.string.goldannotation));
-            remoteViews.setImageViewResource(R.id.MetalImage, R.drawable.gold);
+            remoteViews.setImageViewResource(R.id.MetalImage,R.drawable.gold);
             remoteViews.setTextViewText(R.id.ValueTextView,values[1]+" "+context.getString(R.string.value));
-
-            intent.removeExtra("MyWidgetID");
-
-            appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
-
+            AppWidgetManager.getInstance(context).updateAppWidget(ID, remoteViews);
         }
         else if(action.equals(VALUE_RECEIVER_2)) {
             new MetalWidget.ParseTask().execute();
@@ -174,8 +183,7 @@ public class MetalWidget extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.MetalTextView, context.getString(R.string.silvannotation));
             remoteViews.setImageViewResource(R.id.MetalImage,R.drawable.silver);
             remoteViews.setTextViewText(R.id.ValueTextView,values[2]+" "+context.getString(R.string.value));
-            ComponentName componentName = new ComponentName(context, MetalWidget.class);
-            AppWidgetManager.getInstance(context).updateAppWidget(componentName, remoteViews);
+            AppWidgetManager.getInstance(context).updateAppWidget(ID, remoteViews);
         }
         else if(action.equals(VALUE_RECEIVER_3)) {
             new MetalWidget.ParseTask().execute();
@@ -183,8 +191,7 @@ public class MetalWidget extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.MetalTextView, context.getString(R.string.platannotation));
             remoteViews.setImageViewResource(R.id.MetalImage,R.drawable.plat);
             remoteViews.setTextViewText(R.id.ValueTextView,values[3]+" "+context.getString(R.string.value));
-            ComponentName componentName = new ComponentName(context, MetalWidget.class);
-            AppWidgetManager.getInstance(context).updateAppWidget(componentName, remoteViews);
+            AppWidgetManager.getInstance(context).updateAppWidget(ID, remoteViews);
         }
         else if(action.equals(VALUE_RECEIVER_4)) {
             new MetalWidget.ParseTask().execute();
@@ -192,8 +199,7 @@ public class MetalWidget extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.MetalTextView, context.getString(R.string.pallannotation));
             remoteViews.setImageViewResource(R.id.MetalImage,R.drawable.pall);
             remoteViews.setTextViewText(R.id.ValueTextView,values[4]+" "+context.getString(R.string.value));
-            ComponentName componentName = new ComponentName(context, MetalWidget.class);
-            AppWidgetManager.getInstance(context).updateAppWidget(componentName, remoteViews);
+            AppWidgetManager.getInstance(context).updateAppWidget(ID, remoteViews);
         }
         super.onReceive(context, intent);
     }

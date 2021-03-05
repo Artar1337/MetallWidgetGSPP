@@ -2,6 +2,8 @@ package ru.sibsutis.metallwidgetgspp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -126,4 +129,6 @@ public class MainActivity extends AppCompatActivity {
         bUpdate.setOnClickListener(operationListener);
         tableUpdate();
     }
+
+
 }

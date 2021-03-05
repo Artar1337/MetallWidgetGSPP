@@ -8,55 +8,26 @@
     android:layout_gravity="center">
 
     <TextView android:id="@+id/MetalTextView"
-        android:text="@string/goldannotation"
+        android:text="Обновите, чтобы увидеть имя металла"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:textColor="@android:color/black"/>
 
     <TextView android:id="@+id/ValueTextView"
-        android:text="\?"
+        android:text="Обновите, чтобы увидеть цену"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:textColor="@android:color/black"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@android:color/white"
-        android:layout_gravity="center">
-
-
         <Button
-            android:id="@+id/radio_1"
-            android:layout_width="48dp"
+            android:id="@+id/buttonUpdate"
+            android:layout_width="100dip"
             android:layout_height="wrap_content"
-            android:text="Au"
+            android:layout_gravity="center"
+            android:text="@string/update"
             />
-
-        <Button
-            android:id="@+id/radio_2"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:text="Ag"
-            />
-
-        <Button
-            android:id="@+id/radio_3"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:text="Pt"
-        />
-
-        <Button
-            android:id="@+id/radio_4"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:text="Pd"
-             />
-        </LinearLayout>
 
 
     <ImageView
@@ -64,6 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal|center"
-        android:src="@drawable/gold"/>
+        android:src="@drawable/needtoupdate"/>
 
 </LinearLayout>
