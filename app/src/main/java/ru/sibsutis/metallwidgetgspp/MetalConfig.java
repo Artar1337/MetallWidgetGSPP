@@ -69,7 +69,9 @@ public class MetalConfig extends Activity {
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(WIDGET_INDEX + widgetID, index);
         editor.commit();
-
+        //Фикс неустанавливающегося события кнопки
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        MetalWidget.updateWidget(this, appWidgetManager, sp, widgetID);
         // положительный ответ
         setResult(RESULT_OK, resultValue);
         finish();

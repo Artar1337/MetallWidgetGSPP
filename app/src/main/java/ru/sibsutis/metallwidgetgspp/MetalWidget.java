@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.jsoup.Jsoup;
@@ -65,6 +66,7 @@ public class MetalWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
+        Log.wtf("ON", "CREATE");
     }
 
     @Override
@@ -148,9 +150,22 @@ public class MetalWidget extends AppWidgetProvider {
 
         final String action = intent.getAction();
         int ID = -1;
+        //Log.wtf("Action", action);
+
+        if (action.equals("android.appwidget.action.APPWIDGET_UPDATE")) {
+            //происходит в самом начале, еще до конфигурации виджета
+            //можно сразу выходить и ничего не вызывать
+            return;
+        }
+
         if (intent.getExtras() != null) {
             ID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+            //Log.wtf("ID", String.valueOf(ID));
+            //Log.wtf("Index", String.valueOf(intent.getIntExtra(VALUE_OF_INDEX, -1)));
+            if (ID == -1)
+                return;
         }
+
 
         if (action.equals(VALUE_RECEIVER_1)) {
             new MetalWidget.ParseTask().execute();
