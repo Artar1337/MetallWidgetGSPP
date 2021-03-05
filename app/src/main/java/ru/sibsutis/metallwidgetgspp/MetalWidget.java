@@ -3,24 +3,17 @@ package ru.sibsutis.metallwidgetgspp;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.TableLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.lang.reflect.WildcardType;
 
 public class MetalWidget extends AppWidgetProvider {
 
